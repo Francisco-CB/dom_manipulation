@@ -39,13 +39,14 @@ function computerPlay(){
 }
 
 function game(result, playerScore, computerScore){
-    if (result.search('win') !== -1){
+    if (result.search('win') !== -1 && result.search('tied') == -1){
         playerScore.textContent = parseInt(playerScore.textContent) + 1;
     }
-    else{
+    else if(result.search('lose') !== -1 && result.search('tied') == -1){
         computerScore.textContent = parseInt(computerScore.textContent) + 1;
     }
-    console.log(result);
+    
+    roundResult.textContent = result;
 
     return
 }
@@ -59,6 +60,7 @@ function play(event){
 
 const playerPts = document.getElementById("playerScore");
 const computerPts = document.getElementById("computerScore");
+const roundResult = document.getElementById("result")
 
 const botones = document.querySelectorAll("button");
 botones.forEach(button => button.addEventListener('click', play));
