@@ -38,42 +38,27 @@ function computerPlay(){
     return computer_options[election]
 }
 
-function playerSelection(){
-    let player_election;
-    player_election = window.prompt('Rock, Paper, or Scissors?');
-    return player_election.toLowerCase()
-}
-
-function game(){
-    let playerWins = 0;
-    let computerWins = 0;
-    let player;
-    let computer;
-    let result;
-
-    for (let i=0; i<5; i++){
-        player = playerSelection();
-        computer = computerPlay();
-        result = playRound(player, computer);
-        
-        if (result.search('win') !== -1){
-            playerWins += 1;
-        }
-        else{
-            computerWins += 1;
-        }
-
-        console.log(result);
-    }
-    
-    if(playerWins > computerWins){
-        console.log('You win! :)')
-    }
-    else if(playerWins < computerWins){
-        console.log('You lose! :(')
+function game(result, playerScore, computerScore){
+    if (result.search('win') !== -1){
+        playerScore.textContent = parseInt(playerScore.textContent) + 1;
     }
     else{
-        console.log('You tied!')
+        computerScore.textContent = parseInt(computerScore.textContent) + 1;
     }
+    console.log(result);
+
     return
 }
+
+function play(event){
+    player = event.target.textContent.toLowerCase();
+    computer = computerPlay();
+    result = playRound(player, computer);
+    game(result, playerPts, computerPts);
+}
+
+const playerPts = document.getElementById("playerScore");
+const computerPts = document.getElementById("computerScore");
+
+const botones = document.querySelectorAll("button");
+botones.forEach(button => button.addEventListener('click', play));
