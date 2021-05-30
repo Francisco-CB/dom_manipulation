@@ -41,26 +41,36 @@ function computerPlay(){
 function game(result, playerScore, computerScore){
     if (result.search('win') !== -1 && result.search('tied') == -1){
         playerScore.textContent = parseInt(playerScore.textContent) + 1;
+        if (parseInt(playerScore.textContent) == 5){
+            winner.textContent = "You beat the machine!\nWanna try again?";
+            Array.from(botones).forEach(button => button.removeEventListener('click', play));
+        }
     }
     else if(result.search('lose') !== -1 && result.search('tied') == -1){
         computerScore.textContent = parseInt(computerScore.textContent) + 1;
+        if (parseInt(computerScore.textContent) == 5){
+            winner.textContent = "You lost to the machine!\nWanna try again?";
+            Array.from(botones).forEach(button => button.removeEventListener('click', play));
+        }
     }
     
-    roundResult.textContent = result;
-
     return
 }
+
+function reset(){}
 
 function play(event){
     player = event.target.textContent.toLowerCase();
     computer = computerPlay();
     result = playRound(player, computer);
+    roundResult.textContent = result;
     game(result, playerPts, computerPts);
 }
 
 const playerPts = document.getElementById("playerScore");
 const computerPts = document.getElementById("computerScore");
-const roundResult = document.getElementById("result")
+const roundResult = document.getElementById("result");
+const winner = document.getElementById("winner-anouncer");
+const botones = document.getElementsByClassName("boton-eleccion");
 
-const botones = document.querySelectorAll("button");
-botones.forEach(button => button.addEventListener('click', play));
+Array.from(botones).forEach(button => button.addEventListener('click', play));
