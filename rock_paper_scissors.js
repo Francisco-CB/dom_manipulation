@@ -53,11 +53,16 @@ function game(result, playerScore, computerScore){
             Array.from(botones).forEach(button => button.removeEventListener('click', play));
         }
     }
-    
-    return
 }
 
-function reset(){}
+function reset(event){
+    Array.from(botones).forEach(button => button.removeEventListener('click', play));
+    Array.from(botones).forEach(button => button.addEventListener('click', play));
+    winner.textContent = "You can do it!";
+    roundResult.textContent = " ";
+    playerScore.textContent = 0;
+    computerScore.textContent = 0;
+}
 
 function play(event){
     player = event.target.textContent.toLowerCase();
@@ -72,5 +77,7 @@ const computerPts = document.getElementById("computerScore");
 const roundResult = document.getElementById("result");
 const winner = document.getElementById("winner-anouncer");
 const botones = document.getElementsByClassName("boton-eleccion");
+const retryButton = document.getElementById("retryButton");
 
 Array.from(botones).forEach(button => button.addEventListener('click', play));
+retryButton.addEventListener('click', reset);
